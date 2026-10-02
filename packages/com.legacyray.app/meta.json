@@ -1,0 +1,16 @@
+{
+  "name": "LegacyRay",
+  "tagline": "VLESS, Reality и AmneziaWG для iOS 4–7",
+  "compatible": "iOS 4.0 – 7.1.2",
+  "tint": "#b87333",
+  "links": [
+    {
+      "title": "Исходный код на GitHub",
+      "url": "https://github.com/LR-Vensuki/LegacyRay"
+    },
+    {
+      "title": "Оригинал: senko (sqmrak)",
+      "url": "https://github.com/sqmrak/senko"
+    }
+  ]
+}
