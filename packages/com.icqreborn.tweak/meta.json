@@ -1,0 +1,12 @@
+{
+  "name": "ICQ Reborn",
+  "tagline": "Старые клиенты ICQ — на ваш сервер",
+  "compatible": "iOS 6",
+  "tint": "#3c9a1f",
+  "links": [
+    {
+      "title": "Исходный код на GitHub",
+      "url": "https://github.com/LR-Vensuki/ICQReborn"
+    }
+  ]
+}
