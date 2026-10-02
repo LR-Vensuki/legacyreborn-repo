@@ -1,0 +1,16 @@
+{
+  "name": "TubeFixLegacy",
+  "tagline": "Рабочий YouTube на iOS 5 и 6",
+  "compatible": "iOS 5.0 – 6.1.6",
+  "tint": "#cc181e",
+  "links": [
+    {
+      "title": "Исходный код на GitHub",
+      "url": "https://github.com/LR-Vensuki/TubeFixLegacy"
+    },
+    {
+      "title": "Оригинал: TubeReplacer (Preloading)",
+      "url": "https://github.com/Preloading/TubeReplacer"
+    }
+  ]
+}
