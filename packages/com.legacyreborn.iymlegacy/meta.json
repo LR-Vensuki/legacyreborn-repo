@@ -1,0 +1,16 @@
+{
+  "name": "iYMLegacy",
+  "tagline": "Яндекс Музыка для iOS 6",
+  "compatible": "iOS 6",
+  "tint": "#c8822e",
+  "links": [
+    {
+      "title": "Исходный код и IPA на GitHub",
+      "url": "https://github.com/LR-Vensuki/iYMLegacy"
+    },
+    {
+      "title": "Оригинал: iYMLegacy (igkuzm)",
+      "url": "https://github.com/igkuzm/iYMLegacy"
+    }
+  ]
+}
