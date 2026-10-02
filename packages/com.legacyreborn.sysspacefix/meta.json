@@ -1,0 +1,10 @@
+{
+  "name": "SysSpaceFix",
+  "tagline": "Освобождает место на системном разделе",
+  "links": [
+    {
+      "title": "Исходный код на GitHub",
+      "url": "https://github.com/LR-Vensuki/SysSpaceFix"
+    }
+  ]
+}
