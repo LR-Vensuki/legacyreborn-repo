@@ -1,0 +1,16 @@
+{
+  "name": "Legacy Surf",
+  "tagline": "Современный веб через Chromium, в стиле iOS 6",
+  "compatible": "iOS 6.0 и новее",
+  "tint": "#1e88e5",
+  "links": [
+    {
+      "title": "Исходный код на GitHub",
+      "url": "https://github.com/LR-Vensuki/LegacySurf"
+    },
+    {
+      "title": "Оригинал и сервер: Surf (seg6)",
+      "url": "https://github.com/seg6/surf"
+    }
+  ]
+}
