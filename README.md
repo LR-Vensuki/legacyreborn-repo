@@ -87,10 +87,10 @@
 CYDIA_REPO = $(HOME)/Theos-Projects/cydia-repo
 
 publish:: package
-	@python3 $(CYDIA_REPO)/tools/repo.py publish $(THEOS_PROJECT_DIR) $(if $(MSG),-m "$(MSG)")
+	@python3 $(CYDIA_REPO)/tools/repo.py publish $(CURDIR) $(if $(MSG),-m "$(MSG)")
 
 depiction::
-	@python3 $(CYDIA_REPO)/tools/repo.py publish $(THEOS_PROJECT_DIR) --depiction-only
+	@python3 $(CYDIA_REPO)/tools/repo.py publish $(CURDIR) --depiction-only
 ```
 
 Новый твик или обновление публикуется одной командой:

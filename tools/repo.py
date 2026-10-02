@@ -236,21 +236,21 @@ def canonical_name(package, version, arch):
 # ---------------------------------------------------------------- Theos ---
 
 def resolve_deb(path):
-    """A .deb file, or the last package built in a Theos project folder."""
+    """A .deb file, or the newest package in a project folder: the one `make package` just
+    built (.theos/last_package of Theos, or packages/*.deb of a custom Makefile)."""
     if path.is_file():
         return path
-    if path.is_dir():
-        last = path / '.theos' / 'last_package'
-        if last.is_file():
-            ref = Path(last.read_text().strip())
-            candidate = ref if ref.is_absolute() else path / ref
-            if candidate.is_file():
-                return candidate
-        debs = sorted(list(path.glob('packages/*.deb')) + list(path.glob('*.deb')), key=lambda p: p.stat().st_mtime)
-        if debs:
-            return debs[-1]
+    if not path.is_dir():
+        die(f'{path}: нет такого файла или папки')
+    candidates = list(path.glob('packages/*.deb')) + list(path.glob('*.deb'))
+    last = path / '.theos' / 'last_package'
+    if last.is_file():
+        ref = Path(last.read_text().strip())
+        candidates += [ref] if ref.is_absolute() else [path / ref, path / 'packages' / ref]
+    candidates = [c for c in candidates if c.is_file()]
+    if not candidates:
         die(f'{path}: не найден .deb (сначала make package)')
-    die(f'{path}: нет такого файла или папки')
+    return max(candidates, key=lambda c: c.stat().st_mtime)
 
 
 def theos_package_id(folder):
@@ -756,7 +756,8 @@ def main():
     p.set_defaults(func=cmd_sync)
 
     p = sub.add_parser('publish', help='опубликовать пакет (файл .deb или папку Theos-проекта)')
-    p.add_argument('source', metavar='DEB_ИЛИ_ПАПКА_THEOS')
+    p.add_argument('source', metavar='DEB_ИЛИ_ПАПКА', nargs='?', default='.',
+                   help='файл .deb или папка проекта (по умолчанию текущая)')
     p.add_argument('-m', '--message', action='append', default=[], help='строка changelog для этой версии (можно несколько)')
     p.add_argument('--depiction', metavar='ПАПКА', help='папка с описанием (по умолчанию <Theos-проект>/depiction)')
     p.add_argument('--depiction-only', action='store_true', help='обновить только описание, без пакета')
