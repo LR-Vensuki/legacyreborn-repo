@@ -1,0 +1,400 @@
+/*
+ * iOS 6 / classic Cydia look.
+ *
+ * Must keep working in old WebKit (Mobile Safari and Cydia's UIWebView on
+ * iOS 3–6): no flexbox, grid, CSS variables or calc(), vendor prefixes kept
+ * on purpose, gradients given in the old and the new syntax.
+ */
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html, body { margin: 0; padding: 0; }
+* { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+
+body {
+  min-height: 100%;
+  background: #c5ccd4 url(img/pinstripe.png);
+  -webkit-background-size: 7px 1px;
+  background-size: 7px 1px;
+  color: #000;
+  font: 16px/1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+a { color: inherit; text-decoration: none; }
+img { border: 0; }
+h1, h2, h3, h4, p, ul, ol { margin: 0; padding: 0; font-size: inherit; }
+
+.page { max-width: 640px; margin: 0 auto; padding: 1px 0 14px; }
+
+/* ---------------------------------------------------------------- navbar */
+
+.navbar {
+  position: relative;
+  z-index: 2;
+  height: 44px;
+  text-align: center;
+  background-color: #6d84a2;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#b0bccd), color-stop(.5, #889bb3), color-stop(.5, #8195af), to(#6d84a2));
+  background-image: -webkit-linear-gradient(top, #b0bccd 0%, #889bb3 50%, #8195af 50%, #6d84a2 100%);
+  background-image: linear-gradient(to bottom, #b0bccd 0%, #889bb3 50%, #8195af 50%, #6d84a2 100%);
+  border-bottom: 1px solid #2d3642;
+  -webkit-box-shadow: inset 0 1px 0 #cdd5df, 0 1px 2px rgba(0, 0, 0, .25);
+  box-shadow: inset 0 1px 0 #cdd5df, 0 1px 2px rgba(0, 0, 0, .25);
+}
+
+.navbar h1 {
+  margin: 0 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 43px;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .5);
+}
+.navbar .back + h1 { margin: 0 106px; } /* app.js fits it to the real button width */
+.navbar h1.small { font-size: 17px; }
+
+/* Back button: body + a rotated square for the arrow tip. */
+.navbar .back {
+  position: absolute;
+  z-index: 1;
+  left: 18px;
+  top: 7px;
+  height: 30px;
+  max-width: 84px;
+  padding: 0 7px 0 4px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 28px;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .5);
+  border: 1px solid #375073;
+  border-left: 0;
+  -webkit-border-radius: 0 5px 5px 0;
+  border-radius: 0 5px 5px 0;
+  background-color: #5877a2;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#8ea4c1), color-stop(.5, #6584ab), color-stop(.5, #5877a2), to(#4a6c9b));
+  background-image: -webkit-linear-gradient(top, #8ea4c1 0%, #6584ab 50%, #5877a2 50%, #4a6c9b 100%);
+  background-image: linear-gradient(to bottom, #8ea4c1 0%, #6584ab 50%, #5877a2 50%, #4a6c9b 100%);
+  -webkit-background-origin: border-box;
+  background-origin: border-box;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 0 rgba(255, 255, 255, .25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 0 rgba(255, 255, 255, .25);
+}
+
+.navbar .back:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -11px;
+  top: 3px;
+  width: 22px;
+  height: 22px;
+  border-left: 1px solid #375073;
+  border-bottom: 1px solid #375073;
+  -webkit-border-radius: 0 0 0 3px;
+  border-radius: 0 0 0 3px;
+  background-color: #5877a2;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#8ea4c1), color-stop(.5, #6584ab), color-stop(.5, #5877a2), to(#4a6c9b));
+  background-image: -webkit-linear-gradient(top left, #8ea4c1 0%, #6584ab 50%, #5877a2 50%, #4a6c9b 100%);
+  background-image: linear-gradient(to bottom right, #8ea4c1 0%, #6584ab 50%, #5877a2 50%, #4a6c9b 100%);
+  -webkit-background-origin: border-box;
+  background-origin: border-box;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.navbar .back span { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.navbar .back:active { background-image: none; background-color: #3d5c88; }
+.navbar .back:active:before { background-image: none; background-color: #3d5c88; }
+
+/* ------------------------------------------------------------ search bar */
+
+.searchbar {
+  padding: 7px 8px;
+  background-color: #b4bfcb;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#d0d7df), to(#a6b3c1));
+  background-image: -webkit-linear-gradient(top, #d0d7df, #a6b3c1);
+  background-image: linear-gradient(to bottom, #d0d7df, #a6b3c1);
+  border-top: 1px solid #e6eaee;
+  border-bottom: 1px solid #8794a4;
+}
+
+.searchbar .field { position: relative; max-width: 622px; margin: 0 auto; }
+
+.searchbar input {
+  display: block;
+  width: 100%;
+  height: 31px;
+  margin: 0;
+  padding: 0 10px 0 29px;
+  color: #000;
+  font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border: 1px solid #8e9cab;
+  border-top-color: #73808f;
+  -webkit-border-radius: 16px;
+  border-radius: 16px;
+  background: #fff;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3), 0 1px 0 rgba(255, 255, 255, .45);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .3), 0 1px 0 rgba(255, 255, 255, .45);
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.searchbar input::-webkit-search-decoration { -webkit-appearance: none; }
+.searchbar input::-webkit-input-placeholder { color: #8e8e93; }
+.searchbar input::placeholder { color: #8e8e93; }
+
+/* Magnifying glass */
+.searchbar .field:before,
+.searchbar .field:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+.searchbar .field:before {
+  left: 11px;
+  top: 8px;
+  width: 11px;
+  height: 11px;
+  border: 2px solid #8e8e93;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+}
+.searchbar .field:after {
+  left: 19px;
+  top: 20px;
+  width: 6px;
+  height: 2px;
+  background: #8e8e93;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* --------------------------------------------------------- grouped table */
+
+.label {
+  margin: 18px 20px 7px;
+  color: #4c566c;
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 21px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+}
+
+.group {
+  margin: 10px 9px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #a9afb7;
+  -webkit-border-radius: 9px;
+  border-radius: 9px;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+}
+.label + .group { margin-top: 0; }
+
+.row {
+  display: block;
+  position: relative;
+  min-height: 44px;
+  padding: 11px 10px;
+  border-top: 1px solid #dadada;
+  color: #000;
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 21px;
+}
+.group > .row:first-child, .row.top { border-top: 0; }
+.group > .row:first-child { -webkit-border-radius: 8px 8px 0 0; border-radius: 8px 8px 0 0; }
+.group > .row:last-child { -webkit-border-radius: 0 0 8px 8px; border-radius: 0 0 8px 8px; }
+.group > .row:first-child:last-child { -webkit-border-radius: 8px; border-radius: 8px; }
+
+.row .title { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.row .detail { float: right; margin-left: 10px; color: #385487; font-weight: normal; }
+.row .sub {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #7f7f7f;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 17px;
+}
+
+/* Disclosure chevron */
+a.row { padding-right: 31px; }
+a.row:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 9px;
+  height: 9px;
+  margin-top: -5px;
+  border-top: 3px solid #808080;
+  border-right: 3px solid #808080;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* Selected cell (iOS needs ontouchstart on <body> for :active) */
+a.row:active {
+  color: #fff;
+  background-color: #0374e2;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#058cf5), to(#015fe6));
+  background-image: -webkit-linear-gradient(top, #058cf5, #015fe6);
+  background-image: linear-gradient(to bottom, #058cf5, #015fe6);
+}
+a.row:active:after { border-color: #fff; }
+a.row:active .detail, a.row:active .sub { color: #fff; }
+
+.row.pkg { min-height: 62px; padding-left: 62px; font-size: 16px; }
+.row.pkg .icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  -webkit-border-radius: 9px;
+  border-radius: 9px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+}
+.row.pkg .detail { color: #7f7f7f; font-size: 14px; }
+.row.pkg .sub { margin-top: 2px; }
+
+.row.stacked .value {
+  display: block;
+  margin-top: 2px;
+  color: #385487;
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 19px;
+  word-wrap: break-word;
+}
+
+.row.url {
+  color: #385487;
+  font-weight: normal;
+  text-align: center;
+  word-wrap: break-word;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.row.empty { color: #7f7f7f; font-weight: normal; text-align: center; }
+
+/* ------------------------------------------------------------ header card */
+
+.profile { position: relative; min-height: 88px; padding: 12px 12px 12px 88px; }
+.profile .icon {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: 62px;
+  height: 62px;
+  -webkit-border-radius: 13px;
+  border-radius: 13px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, .45);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .45);
+}
+.profile h2 { margin-top: 1px; font-size: 20px; line-height: 24px; word-wrap: break-word; }
+.profile p { margin-top: 2px; color: #4c566c; font-size: 14px; line-height: 18px; }
+.profile .meta { color: #7f7f7f; font-size: 13px; }
+
+/* ------------------------------------------------------------ text blocks */
+
+.text { padding: 11px 12px; font-size: 15px; line-height: 20px; word-wrap: break-word; }
+.text p, .text ul, .text ol, .text h3, .text h4, .text hr { margin: 0 0 9px; }
+.text > :last-child { margin-bottom: 0; }
+.text ul, .text ol { padding-left: 22px; }
+.text li { margin: 2px 0; }
+.text h3 { font-size: 17px; line-height: 22px; }
+.text h4 { font-size: 15px; }
+.text a { color: #2463de; }
+.text code {
+  padding: 0 3px;
+  font: 13px Menlo, Courier, monospace;
+  background: #eef0f3;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+.text hr { height: 0; border: 0; border-top: 1px solid #dadada; }
+.text .date { color: #7f7f7f; font-size: 13px; }
+.text.center { text-align: center; }
+.text .version-head { margin-bottom: 6px; }
+
+/* ----------------------------------------------------------------- button */
+
+.button {
+  display: block;
+  height: 46px;
+  margin: 10px 9px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 44px;
+  text-align: center;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+  border: 1px solid #1a4a96;
+  -webkit-border-radius: 9px;
+  border-radius: 9px;
+  background-color: #2f74e0;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#7db1f7), color-stop(.5, #4689ec), color-stop(.5, #2f74e0), to(#2d6ed6));
+  background-image: -webkit-linear-gradient(top, #7db1f7 0%, #4689ec 50%, #2f74e0 50%, #2d6ed6 100%);
+  background-image: linear-gradient(to bottom, #7db1f7 0%, #4689ec 50%, #2f74e0 50%, #2d6ed6 100%);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 1px 0 rgba(255, 255, 255, .7);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 1px 0 rgba(255, 255, 255, .7);
+}
+.button:active {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#3a76d0), to(#1d55b0));
+  background-image: -webkit-linear-gradient(top, #3a76d0, #1d55b0);
+  background-image: linear-gradient(to bottom, #3a76d0, #1d55b0);
+}
+
+/* ------------------------------------------------------------ screenshots */
+
+.shots {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 9px 12px;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+.shots img {
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: top;
+  background: #fff;
+  border: 1px solid #a9afb7;
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+}
+.shots img:last-child { margin-right: 0; }
+
+/* ----------------------------------------------------------------- footer */
+
+.footer {
+  margin: 18px 20px 6px;
+  color: #4c566c;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .8);
+}
+.footer a { font-weight: bold; }
+
+/* ------------------------------------------------- device / app switches */
+
+.ios-only { display: none; }
+.ios .ios-only { display: block; }
+/* Inside Cydia, Sileo, Zebra... the app draws its own bar and header. */
+.in-app .navbar, .in-app .web-only { display: none; }

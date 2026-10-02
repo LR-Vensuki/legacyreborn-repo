@@ -1,0 +1,67 @@
+# Builds the repo with the PHP builder from server/ and publishes it on GitHub Pages.
+#
+# One-time setup in the repository: Settings -> Pages -> Source: "GitHub Actions",
+# Custom domain: your domain, and turn "Enforce HTTPS" off (iOS 6 needs plain HTTP).
+name: Build repo
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # full history: "Updated" dates come from git
+
+      - name: Build
+        run: |
+          command -v php >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq php-cli; }
+          php --version | head -n 1
+
+          # A fresh checkout stamps every file with "now"; use the last commit date instead.
+          git ls-files -z debs | while IFS= read -r -d '' f; do
+            touch -d "@$(git log -1 --format=%ct -- "$f")" "$f"
+          done
+
+          # Same layout as on a PHP hosting: the builder and the sources in repo/,
+          # packages in debs/. Only the builder is taken from server/, nothing else.
+          rm -rf _site
+          mkdir -p _site/repo/assets _site/debs
+          cp -r server/repo/lib server/repo/cli.php _site/repo/
+          cp config.json _site/repo/
+          cp -r theme _site/repo/
+          if [ -f assets/CydiaIcon.png ]; then cp assets/CydiaIcon.png _site/repo/assets/; fi
+          if [ -d packages ]; then cp -r packages _site/repo/; fi
+          if [ -d debs ]; then cp -rp debs/. _site/debs/; fi
+          php _site/repo/cli.php
+
+          # Publish only the built site: no PHP, no sources.
+          rm -rf _site/repo
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

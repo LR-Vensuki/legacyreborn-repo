@@ -1,0 +1,14 @@
+{
+  "name": "LegacyReborn Repo",
+  "description": "Официальный репозиторий LegacyReborn Project",
+  "url": "http://repo.legacyreborn.cfd/",
+  "language": "ru",
+  "managers": ["cydia", "sileo", "zebra", "installer"],
+  "links": [
+    { "title": "GitHub", "url": "https://github.com/LR-Vensuki" },
+    { "title": "Telegram", "url": "https://t.me/LegacyReborn-Project" }
+  ],
+  "footer": "© 2026 LegacyReborn Project",
+  "domain": "",
+  "keep_old_versions": true
+}

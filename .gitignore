@@ -1,0 +1,13 @@
+# publishing key: never commit or share these
+/publish.json
+/server/repo/secret.php
+/server/repo/data/
+# archives may contain the key (repo/secret.php)
+*.zip
+*.rar
+*.7z
+*.tar.gz
+# old local build output
+/public/
+__pycache__/
+.DS_Store

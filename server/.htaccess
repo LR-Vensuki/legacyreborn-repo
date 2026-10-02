@@ -1,0 +1,26 @@
+# BEGIN cydia-repo (rewritten on every build; put your own rules outside this block)
+AddType application/vnd.debian.binary-package .deb
+AddType application/x-bzip2 .bz2
+AddType application/gzip .gz
+AddType application/json .json
+RemoveEncoding .gz .bz2
+AddDefaultCharset utf-8
+ErrorDocument 404 /404.html
+<FilesMatch "^(Packages|Release)$">
+  ForceType text/plain
+</FilesMatch>
+<FilesMatch "^\.user\.ini$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+<IfModule mod_headers.c>
+  <FilesMatch "^(Packages.*|Release|index\.html|.*\.json)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+# END cydia-repo
