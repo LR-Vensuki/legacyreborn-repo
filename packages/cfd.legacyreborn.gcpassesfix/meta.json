@@ -1,0 +1,26 @@
+{
+  "name": "GCPassesFix",
+  "tagline": "Чинит Game Center и Passbook на старых iOS",
+  "author": "LegacyReborn",
+  "compatible": "iOS 5.0 – 7.1.2",
+  "featured": true,
+  "tint": "#3a8f4a",
+  "links": [
+    {
+      "title": "Исходный код на GitHub",
+      "url": "https://github.com/LR-Vensuki/GCPassesFix"
+    },
+    {
+      "title": "Гайд по Game Center (bag.xml)",
+      "url": "https://developer.bag-xml.com/guides/gamecenter"
+    },
+    {
+      "title": "Гайд по Passbook (bag.xml)",
+      "url": "https://developer.bag-xml.com/guides/passbook"
+    },
+    {
+      "title": "Оригинал: SigPass (bag.xml)",
+      "url": "https://github.com/bag-xml/SigPass"
+    }
+  ]
+}
